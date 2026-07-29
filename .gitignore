@@ -5,5 +5,3 @@ dist/
 .yarn/unplugged
 .yarn/build-state.yml
 yarn.lock
-ios/Pods/
-ios/build/
