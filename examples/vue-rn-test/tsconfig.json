@@ -1,0 +1,10 @@
+{
+  "extends": "@react-native/typescript-config",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "noEmit": true,
+    "types": ["jest"]
+  },
+  "include": ["./**/*.ts", "./**/*.js", "./**/*.vue"],
+  "exclude": ["**/node_modules", "**/Pods"]
+}
