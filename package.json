@@ -1,10 +1,12 @@
 {
-  "name": "@rasenjs/vue-rn",
+  "name": "@cat5th/vue-rn",
   "version": "0.1.0",
-  "private": true,
-  "description": "Vue 3 custom renderer for React Native Fabric via @rasenjs/rn-dom",
+  "description": "Vue 3 custom renderer for React Native Fabric",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -66,7 +68,6 @@
   },
   "files": [
     "dist",
-    "transformer",
     "tags.d.ts"
   ]
 }
