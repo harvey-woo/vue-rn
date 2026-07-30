@@ -38,11 +38,11 @@ async function resolve(): Promise<{ styleMap: Map<string, Record<string, unknown
   else css = `@import "tailwindcss";`
   for (const cls of classes) css += `\n@source inline("${cls}");`
 
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const postcss = require('postcss')
+  const _require = createRequire(join(root, 'package.json'))
+  const postcss = _require('postcss')
   const tw = (() => {
-    try { return createRequire(join(root, 'package.json'))('@tailwindcss/postcss') }
-    catch { return require('tailwindcss') }
+    try { return _require('@tailwindcss/postcss') }
+    catch { return _require('tailwindcss') }
   })() as (...args: unknown[]) => unknown
 
   let out = ''

@@ -30,8 +30,7 @@ async function resolve(): Promise<{ styleMap: Map<string, Record<string, unknown
   const root = process.cwd()
   const classes = scanClasses(root)
   const projectRequire = createRequire(join(root, 'package.json'))
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const postcss = require('postcss')
+  const postcss = projectRequire('postcss')
 
   let config: Record<string, unknown> = {}
   for (const name of ['tailwind.config.js', 'tailwind.config.ts', 'tailwind.config.cjs']) {
@@ -43,10 +42,7 @@ async function resolve(): Promise<{ styleMap: Map<string, Record<string, unknown
   }
 
   const jitConfig = { ...config, content: (config.content as string[]) || [], safelist: ((config.safelist as string[]) || []).concat(classes) }
-  const tw = (() => {
-    try { return projectRequire('tailwindcss') }
-    catch { return require('tailwindcss') }
-  })() as (...args: unknown[]) => unknown
+  const tw = projectRequire('tailwindcss') as (...args: unknown[]) => unknown
 
   let out = ''
   try {

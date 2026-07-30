@@ -203,7 +203,7 @@ if (typeof __VUE_HMR_RUNTIME__ !== 'undefined') {
     ...params,
     filename: filename.replace(/\.vue$/, '.js'),
     src: stripped.code as string,
-    options: { ...params.options, hot: false },
+    options: { ...(params.options as Record<string, unknown>), hot: false },
   })
 }
 

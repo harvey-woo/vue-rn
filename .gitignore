@@ -5,3 +5,5 @@ dist/
 .yarn/unplugged
 .yarn/build-state.yml
 yarn.lock
+package-lock.json
+*.bak

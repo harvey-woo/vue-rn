@@ -3,9 +3,10 @@ const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config')
 
 const vueRNRoot = path.resolve(__dirname, '../..')
 const vueRNPath = path.join(vueRNRoot, 'dist')
-const reactNativePath = path.join(vueRNRoot, 'node_modules/react-native')
-const rnDomPath = path.join(vueRNRoot, 'node_modules/@rasenjs/rn-dom')
-const vueRuntimeCorePath = path.join(vueRNRoot, 'node_modules/@vue/runtime-core')
+const exampleRoot = __dirname
+const reactNativePath = path.join(exampleRoot, 'node_modules/react-native')
+const rnDomPath = path.join(exampleRoot, 'node_modules/@rasenjs/rn-dom/dist')
+const vueRuntimeCorePath = path.join(exampleRoot, 'node_modules/@vue/runtime-core')
 
 const defaultConfig = getDefaultConfig(__dirname)
 
@@ -32,7 +33,7 @@ const config = {
       // Force single vue-router module so Symbol('router') matches everywhere.
       if (moduleName === 'vue-router') {
         return {
-          filePath: path.join(vueRNRoot, 'node_modules/vue-router/dist/vue-router.cjs'),
+          filePath: path.join(exampleRoot, 'node_modules/vue-router/dist/vue-router.cjs'),
           type: 'sourceFile',
         }
       }
@@ -63,7 +64,7 @@ const config = {
       }
       if (moduleName === '@rasenjs/rn-dom/elements') {
         return {
-          filePath: path.join(rnDomPath, 'elements.cjs'),
+          filePath: path.join(rnDomPath, '..', 'elements.cjs'),
           type: 'sourceFile',
         }
       }
