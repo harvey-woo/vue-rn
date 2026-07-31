@@ -45,6 +45,17 @@
     "entry": "Entry File",
     "component": "Component"
   },
+  "webDemo": {
+    "title": "Try Web Components Live",
+    "subtitle": "Rendered by {'@'}cat5th/vue-rn/web — the same code also runs on React Native",
+    "cardTitle": "Vue RN Web Components",
+    "cardDesc": "View, Text, Pressable, TextInput, ActivityIndicator and more, rendered by vue-rn's web compatibility layer — same behavior as native RN.",
+    "pressMe": "Press me (Alert)",
+    "pressed": "Pressed ✅",
+    "inputPlaceholder": "Type something...",
+    "youTyped": "You typed",
+    "loading": "Loading..."
+  },
   "docs": {
     "intro": "Full documentation is hosted on the GitHub repository, organized by topic:",
     "gettingStarted": "Getting Started",
