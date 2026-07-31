@@ -16,15 +16,24 @@ const remaining = computed(() => total.value - completed.value)
 const cssStyle = useStyleModule()
 const cardBg = computed(() => cssStyle?.card?.backgroundColor ?? '#1a1a2e')
 
-function onInputChange(e: any) {
-  draft.value = e?.text ?? e ?? ''
+function onInputChange(text: string) {
+  draft.value = text ?? ''
 }
+
+// ── Press 事件演示（RN Pressable 语义：pressIn → pressMove → press）──
+const pressLog = ref('')
+let pressMoveCount = 0
+
+function onPressIn() { pressLog.value = 'pressed in 👇' }
+function onPressMove() { pressLog.value = `moved ×${++pressMoveCount} 👆` }
+function onPressOut() { pressLog.value = 'released ✋' }
 
 function addTodo() {
   const text = draft.value.trim()
   if (!text) return
   todos.push({ id: nextId.value++, label: text, done: false })
   draft.value = ''
+  pressMoveCount = 0
 }
 
 function toggle(todo: TodoItem_t) { todo.done = !todo.done }
@@ -58,12 +67,15 @@ function clearDone() {
         placeholder="Add todo..."
         placeholderTextColor="#666"
         :editable="true"
-        @change="onInputChange"
+        @changeText="onInputChange"
       />
-      <View class="justify-center" :style="{ backgroundColor: '#16c79a', borderRadius: 10, paddingHorizontal: 24, paddingVertical: 12, height: 48, marginLeft: 8 }" @touchEnd="addTodo">
+      <View class="justify-center" :style="{ backgroundColor: '#16c79a', borderRadius: 10, paddingHorizontal: 24, paddingVertical: 12, height: 48, marginLeft: 8 }" @pressIn="onPressIn" @pressMove="onPressMove" @pressOut="onPressOut" @press="addTodo">
         <Text class="font-bold" :style="{ fontSize: 16, color: '#ffffff' }">Add</Text>
       </View>
     </View>
+
+    <!-- Press 事件日志（onPressMove 走 rn-dom 合成） -->
+    <Text v-if="pressLog" :style="{ fontSize: 13, color: '#16c79a', textAlign: 'center', marginBottom: 8 }">{{ pressLog }}</Text>
 
     <!-- Stats -->
     <View class="flex-row justify-between items-center mb-4">

@@ -16,22 +16,42 @@ import type { RNElementPropMap, RNEvent } from '@rasenjs/rn-dom'
 // vue-rn 的 `@touchEnd` 等事件经 rn-dom normalizeEventName 映射为
 // Fabric 的 onTouchEnd / onTouchStart 等。回调参数为 rn-dom 的 RNEvent。
 
-/** 触摸事件（View 等通用组件） */
+/** 触摸事件（View 等通用组件）— 对齐 RN View API */
 export interface RNTouchEvents {
   onTouchEnd?: (event: RNEvent) => void
   onTouchStart?: (event: RNEvent) => void
   onTouchMove?: (event: RNEvent) => void
   onTouchCancel?: (event: RNEvent) => void
-  /** onPress 是 onTouchEnd 的回退（rn-dom 支持） */
-  onPress?: (event: RNEvent) => void
+  onFocus?: (event: RNEvent) => void
+  onBlur?: (event: RNEvent) => void
+  onLayout?: (event: RNEvent) => void
 }
 
-/** TextInput 事件 */
+/** Press 事件（Pressable / Touchable* / 可点击组件）— 对齐 RN Pressable API */
+export interface RNPressEvents {
+  /** 点击（Fabric 原生 topPress 或 touch 合成） */
+  onPress?: (event: RNEvent) => void
+  /** 按下开始（由 onTouchStart 合成） */
+  onPressIn?: (event: RNEvent) => void
+  /** 按下移动（由 onTouchMove 合成） */
+  onPressMove?: (event: RNEvent) => void
+  /** 按下结束（由 onTouchEnd 合成） */
+  onPressOut?: (event: RNEvent) => void
+  /** 长按（按住 500ms 触发） */
+  onLongPress?: (event: RNEvent) => void
+}
+
+/** TextInput 事件 — 对齐 RN TextInput API */
 export interface RNTextInputEvents {
+  /** 文本变化，回调直接收到字符串（RN 表面 API） */
+  onChangeText?: (text: string) => void
+  /** 底层变化事件（兼容） */
   onChange?: (event: RNEvent) => void
   onFocus?: (event: RNEvent) => void
   onBlur?: (event: RNEvent) => void
   onSubmitEditing?: (event: RNEvent) => void
+  onEndEditing?: (event: RNEvent) => void
+  onKeyPress?: (event: RNEvent) => void
 }
 
 /** Image 事件 */
@@ -57,9 +77,9 @@ type RNComponent<
 
 declare module 'vue' {
   export interface GlobalComponents {
-    View: RNComponent<'View', RNTouchEvents>
+    View: RNComponent<'View', RNTouchEvents & RNPressEvents>
     SafeAreaView: RNComponent<'SafeAreaView', RNTouchEvents>
-    Text: RNComponent<'Text', RNTouchEvents>
+    Text: RNComponent<'Text', RNTouchEvents & RNPressEvents>
     Image: RNComponent<'Image', RNImageEvents & RNTouchEvents>
     TextInput: RNComponent<'TextInput', RNTextInputEvents>
     AndroidTextInput: RNComponent<'AndroidTextInput', RNTextInputEvents>
@@ -67,16 +87,16 @@ declare module 'vue' {
     AndroidHorizontalScrollView: RNComponent<'AndroidHorizontalScrollView', RNScrollViewEvents & RNTouchEvents>
     ActivityIndicator: RNComponent<'ActivityIndicator'>
     ProgressBarAndroid: RNComponent<'ProgressBarAndroid'>
-    Switch: RNComponent<'Switch', RNTouchEvents>
-    AndroidSwitch: RNComponent<'AndroidSwitch', RNTouchEvents>
+    Switch: RNComponent<'Switch', RNPressEvents>
+    AndroidSwitch: RNComponent<'AndroidSwitch', RNPressEvents>
     RefreshControl: RNComponent<'RefreshControl'>
     AndroidSwipeRefreshLayout: RNComponent<'AndroidSwipeRefreshLayout'>
     Modal: RNComponent<'Modal', RNTouchEvents>
     DrawerLayoutAndroid: RNComponent<'DrawerLayoutAndroid'>
-    Pressable: RNComponent<'Pressable', RNTouchEvents>
-    TouchableOpacity: RNComponent<'TouchableOpacity', RNTouchEvents>
-    TouchableHighlight: RNComponent<'TouchableHighlight', RNTouchEvents>
-    TouchableWithoutFeedback: RNComponent<'TouchableWithoutFeedback', RNTouchEvents>
+    Pressable: RNComponent<'Pressable', RNPressEvents>
+    TouchableOpacity: RNComponent<'TouchableOpacity', RNPressEvents>
+    TouchableHighlight: RNComponent<'TouchableHighlight', RNPressEvents>
+    TouchableWithoutFeedback: RNComponent<'TouchableWithoutFeedback', RNPressEvents>
     KeyboardAvoidingView: RNComponent<'KeyboardAvoidingView'>
     StatusBar: RNComponent<'StatusBar'>
     DebuggingOverlay: RNComponent<'DebuggingOverlay'>

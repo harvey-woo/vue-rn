@@ -35,18 +35,17 @@ Props 与事件语义与 React Native 保持一致。
 ## 事件
 
 vue-rn 使用 **DOM 风格事件名**，在模板中通过 `@` 绑定。
-事件经 rn-dom 归一化为 Fabric 原生事件，回调参数为 `RNEvent`（含 `nativeEvent`）。
+事件经 rn-dom 归一化为 Fabric 原生事件，**命名与 React Native 官方 API 一致**。
+回调参数为 `RNEvent`（含 `nativeEvent`），`onChangeText` 回调直接收到字符串。
 
-### 通用触摸事件（View / Text / 所有可点击组件）
+### 触摸事件（View / Text）— 对齐 RN View API
 
 | 事件 | 说明 | 回调参数 |
 |------|------|---------|
-| `@touchEnd` | 触摸结束（点击） | `RNEvent` |
+| `@touchEnd` | 触摸结束 | `RNEvent` |
 | `@touchStart` | 触摸开始 | `RNEvent` |
 | `@touchMove` | 触摸移动 | `RNEvent` |
 | `@touchCancel` | 触摸取消 | `RNEvent` |
-| `@press` | `touchEnd` 的别名（等价于 `onPress`） | `RNEvent` |
-| `@click` | `touchEnd` 的别名 | `RNEvent` |
 
 ```vue
 <View @touchEnd="handleTap">
@@ -54,18 +53,42 @@ vue-rn 使用 **DOM 风格事件名**，在模板中通过 `@` 绑定。
 </View>
 ```
 
-### TextInput 事件
+### Press 事件（Pressable / Touchable* / View / Text）— 对齐 RN Pressable API
+
+| 事件 | 说明 | 回调参数 |
+|------|------|---------|
+| `@press` | 点击（`onPress`） | `RNEvent` |
+| `@pressIn` | 按下开始（由触摸合成） | `RNEvent` |
+| `@pressMove` | 按下移动（由触摸合成） | `RNEvent` |
+| `@pressOut` | 按下结束（由触摸合成） | `RNEvent` |
+| `@longPress` | 长按（按住 500ms） | `RNEvent` |
+
+> `onPress` 由 Fabric 原生 `topPress` 事件触发；`onPressIn`/`onPressMove`/
+> `onPressOut`/`onLongPress` 由 rn-dom 从触摸事件合成（与 RN Pressability
+> 行为一致）。序列：`pressIn → (pressMove*) → [longPress 500ms] → pressOut → press`，
+> 长按会抑制 `onPress`。独立事件（如 `onPress` 与 `onTouchEnd`）都会触发，
+> 冒泡在第一个处理该事件的节点停止。
+
+```vue
+<Pressable @press="handlePress" @longPress="handleLongPress">
+  <Text>按我</Text>
+</Pressable>
+```
+
+### TextInput 事件 — 对齐 RN TextInput API
 
 | 事件 | 说明 |
 |------|------|
-| `@change` | 文本变化（`onChange`） |
-| `@input` | `change` 的别名 |
+| `@changeText` | 文本变化，**回调直接收到字符串**（推荐） |
+| `@change` | 底层变化事件（回调收到 `RNEvent`） |
 | `@focus` | 获得焦点 |
 | `@blur` | 失去焦点 |
 | `@submitEditing` | 提交编辑 |
+| `@endEditing` | 结束编辑 |
+| `@keyPress` | 按键 |
 
 ```vue
-<TextInput :text="draft" @change="draft = $event.text" />
+<TextInput :text="draft" @changeText="draft = $event" />
 ```
 
 ### Image 事件
@@ -85,7 +108,8 @@ vue-rn 使用 **DOM 风格事件名**，在模板中通过 `@` 绑定。
 
 - **Props 类型**：来自 `@rasenjs/rn-dom` 的 `RNElementPropMap`，
   映射 React Native 原生组件类型（`ViewProps`、`TextProps` 等）
-- **事件类型**：`RNTouchEvents`、`RNTextInputEvents` 等，回调参数为 `RNEvent`
+- **事件类型**：`RNTouchEvents`、`RNPressEvents`、`RNTextInputEvents` 等，
+  与 RN 官方组件 API 对齐
 - **自动注册**：无需手动引用类型文件，import 主包即生效
 
 ```ts

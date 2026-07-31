@@ -9,3 +9,7 @@ declare module '*.vue' {
   const component: DefineComponent<Record<string, unknown>, Record<string, unknown>, unknown>
   export default component
 }
+
+/** RN 运行时在 index.ts 中 polyfill 的浏览器全局。 */
+declare const window: any
+declare const performance: { now(): number }
