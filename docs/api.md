@@ -168,13 +168,51 @@ import {
 
 ---
 
+## @cat5th/vue-rn/metro
+
+### withVueRN
+
+Metro 配置插件，一行接入 `.vue` 支持与模块去重。
+
+```js
+const { getDefaultConfig } = require('@react-native/metro-config')
+const { withVueRN } = require('@cat5th/vue-rn/metro')
+
+module.exports = withVueRN(getDefaultConfig(__dirname))
+```
+
+**参数**
+
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| `config` | `object` | 你的 Metro 配置（通常来自 `getDefaultConfig(__dirname)`） |
+
+**返回值** `object` — 合并后的 Metro 配置。
+
+插件会自动：
+- 配置 `.vue` / `.mjs` 的 SFC 转换器（`babelTransformerPath`）
+- 开启 `inlineRequires` 优化
+- 模块去重（`nostics` 垫片、`vue` → `@vue/runtime-core`、`vue-router` / `@vue/*` / `rn-dom` 单实例）
+- 追加 watchFolders，兼容任意 node_modules 布局
+
+> 自定义配置会与插件合并；自定义 `resolveRequest` 未命中时请返回 `undefined`，
+> 让插件的去重逻辑继续处理。
+
+---
+
 ## @cat5th/vue-rn/dist/transformer
 
 ### Metro Transformer
 
-路径：`@cat5th/vue-rn/dist/transformer/index`
+`.vue` SFC 转换器已由 `withVueRN` 插件自动配置（推荐）。
+如需手动指定，使用带扩展名的完整路径：
 
-用作 `metro.config.js` 中的 `babelTransformerPath`。
+```js
+babelTransformerPath: require.resolve('@cat5th/vue-rn/dist/transformer/index.js')
+```
+
+> ⚠️ 手动配置时还需自行处理 `nostics` 垫片与 `@vue/*` 模块去重，
+> 推荐直接使用 `@cat5th/vue-rn/metro` 插件。
 
 ### StyleCollection
 

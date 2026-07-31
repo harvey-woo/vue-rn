@@ -32,28 +32,25 @@ cd MyApp
 
 ```bash
 npm install @cat5th/vue-rn @rasenjs/rn-dom vue vue-router
-npm install --save-dev @vue/compiler-sfc
 ```
+
+> `.vue` 转换所需的依赖已自动满足：
+> `@vue/compiler-sfc` 随 `vue` 包传递安装，`@babel/core` 由 RN 模板自带。
 
 ### 3. 配置 Metro
 
-修改 `metro.config.js`，添加 `.vue` 文件支持和 Vue SFC transformer：
+修改 `metro.config.js`，一行接入 `withVueRN` 插件。插件会自动处理：
+`.vue` 文件转换、`vue-router` 兼容、`@vue/*` 单实例等所有配置：
 
 ```js
-const path = require('path')
-const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config')
+const { getDefaultConfig } = require('@react-native/metro-config')
+const { withVueRN } = require('@cat5th/vue-rn/metro')
 
-const defaultConfig = getDefaultConfig(__dirname)
-
-module.exports = mergeConfig(defaultConfig, {
-  transformer: {
-    babelTransformerPath: require.resolve('@cat5th/vue-rn/dist/transformer/index'),
-  },
-  resolver: {
-    sourceExts: [...defaultConfig.resolver.sourceExts, 'vue'],
-  },
-})
+module.exports = withVueRN(getDefaultConfig(__dirname))
 ```
+
+> ⚠️ 不要手动配置 `babelTransformerPath` 或 `resolveRequest`——
+> 插件已封装全部必需配置，手动配置可能破坏模块去重。
 
 ### 4. 添加 TypeScript 声明
 

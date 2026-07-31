@@ -112,20 +112,14 @@ export const router = createRouter({
 
 ```js
 // metro.config.js
-const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config')
-const path = require('path')
+const { getDefaultConfig } = require('@react-native/metro-config')
+const { withVueRN } = require('@cat5th/vue-rn/metro')
 
-const defaultConfig = getDefaultConfig(__dirname)
-
-module.exports = mergeConfig(defaultConfig, {
-  transformer: {
-    babelTransformerPath: require.resolve('@cat5th/vue-rn/dist/transformer/index'),
-  },
-  resolver: {
-    sourceExts: [...defaultConfig.resolver.sourceExts, 'vue'],
-  },
-})
+module.exports = withVueRN(getDefaultConfig(__dirname))
 ```
+
+`withVueRN` 插件自动处理 `.vue` 转换、`vue-router` 兼容、`@vue/*` 模块去重，
+无需手动配置 transformer 或 `resolveRequest`。
 
 ---
 
@@ -137,6 +131,7 @@ module.exports = mergeConfig(defaultConfig, {
 │   ├── index.ts          # Vue 3 自定义渲染器核心
 │   ├── router.ts         # vue-router 集成
 │   ├── router-link.ts    # RN 版 RouterLink 组件
+│   ├── metro/            # withVueRN Metro 插件
 │   └── web/              # Web 兼容层（实验性，未充分测试）
 ├── transformer/
 │   ├── index.ts          # Metro .vue 文件转换器

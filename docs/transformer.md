@@ -1,53 +1,46 @@
 # Metro Transformer
 
-在 `metro.config.js` 中启用 `.vue` 文件支持：
+`@cat5th/vue-rn/metro` 的 `withVueRN` 插件自动启用 `.vue` 文件支持，
+无需手动配置 transformer 或模块解析：
 
 ```js
-const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config')
+const { getDefaultConfig } = require('@react-native/metro-config')
+const { withVueRN } = require('@cat5th/vue-rn/metro')
 
-module.exports = mergeConfig(getDefaultConfig(__dirname), {
-  transformer: {
-    babelTransformerPath: require.resolve('@cat5th/vue-rn/dist/transformer/index'),
-  },
+module.exports = withVueRN(getDefaultConfig(__dirname))
+```
+
+## 插件做了什么
+
+| 配置项 | 说明 |
+|--------|------|
+| `transformer.babelTransformerPath` | 指向内置的 `.vue` SFC 转换器 |
+| `transformer.getTransformOptions` | 开启 `inlineRequires` 优化 |
+| `resolver.sourceExts` | 追加 `vue`、`mjs` 扩展名 |
+| `resolver.resolveRequest` | 模块去重：`nostics` 垫片、`vue` → `@vue/runtime-core`、`vue-router` / `@vue/*` / `rn-dom` 单实例 |
+| `watchFolders` | 追加包根目录，保证任意 node_modules 布局下可解析 |
+
+> ⚠️ 不要手动配置 `babelTransformerPath` 或 `resolveRequest`——
+> 插件已封装全部必需配置，手动覆盖可能破坏模块去重，
+> 导致 Vue 全局状态分裂、点击事件不生效。
+
+### 保留自定义配置
+
+插件会与你的自定义配置合并：
+
+```js
+module.exports = withVueRN({
+  ...getDefaultConfig(__dirname),
   resolver: {
-    sourceExts: [...getDefaultConfig(__dirname).resolver.sourceExts, 'vue'],
+    ...getDefaultConfig(__dirname).resolver,
+    // 自定义扩展名仍然生效
+    sourceExts: [...getDefaultConfig(__dirname).resolver.sourceExts, 'myext'],
   },
 })
 ```
 
-如果用了 `vue-router`，需要额外配置模块解析：
-
-```js
-const path = require('path')
-
-module.exports = mergeConfig(getDefaultConfig(__dirname), {
-  transformer: {
-    babelTransformerPath: require.resolve('@cat5th/vue-rn/dist/transformer/index'),
-  },
-  resolver: {
-    sourceExts: [...getDefaultConfig(__dirname).resolver.sourceExts, 'vue'],
-    resolveRequest: (context, moduleName, platform) => {
-      if (moduleName === 'vue')
-        return { filePath: path.join(__dirname, 'node_modules/@vue/runtime-core/dist/runtime-core.cjs.js'), type: 'sourceFile' }
-      if (moduleName === 'vue-router')
-        return { filePath: path.join(__dirname, 'node_modules/vue-router/dist/vue-router.cjs'), type: 'sourceFile' }
-      if (moduleName === 'nostics')
-        return { filePath: path.resolve(__dirname, '__stubs__/nostics.cjs'), type: 'sourceFile' }
-      return context.resolveRequest(context, moduleName, platform)
-    },
-  },
-  watchFolders: [
-    path.resolve(__dirname, 'node_modules/@cat5th/vue-rn'),
-    path.resolve(__dirname, 'node_modules/@rasenjs/rn-dom'),
-  ],
-})
-```
-
-创建 `__stubs__/nostics.cjs`：
-
-```js
-module.exports = { default: {} }
-```
+> 如需自定义 `resolveRequest`，注意未命中时返回 `undefined`，
+> 让插件的去重逻辑继续处理。
 
 ## CSS 工具类
 
@@ -66,6 +59,9 @@ module.exports = { default: {} }
 ```
 
 支持 **Tailwind CSS v3/v4** 和 **UnoCSS**，自动检测项目依赖。
+
+> 需要在项目中安装对应的 CSS 工具库（如 `tailwindcss`），
+> 转换器会在构建时自动扫描并解析 class。
 
 ## HMR 热更新
 
