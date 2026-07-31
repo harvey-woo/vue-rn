@@ -45,17 +45,6 @@
     "entry": "入口文件",
     "component": "组件"
   },
-  "webDemo": {
-    "title": "在线体验 Web 组件",
-    "subtitle": "以下组件由 {'@'}cat5th/vue-rn/web 渲染——同一套代码也运行在 React Native 上",
-    "cardTitle": "Vue RN Web 组件",
-    "cardDesc": "View、Text、Pressable、TextInput、ActivityIndicator 等组件由 vue-rn 的 Web 兼容层渲染，与 RN 原生效果一致。",
-    "pressMe": "点我试试 (Alert)",
-    "pressed": "已按下 ✅",
-    "inputPlaceholder": "在这里输入文字...",
-    "youTyped": "你输入了",
-    "loading": "加载中..."
-  },
   "docs": {
     "intro": "完整的文档托管在 GitHub 仓库中，按主题分类：",
     "gettingStarted": "入门指南",

@@ -33,72 +33,12 @@
         <pre><code>{{ quickStart }}</code></pre>
       </div>
     </section>
-
-    <!-- Web components demo (uses @cat5th/vue-rn/web) -->
-    <section class="web-demo">
-      <div class="container">
-        <h2 class="section-title">{{ $t('webDemo.title') }}</h2>
-        <p class="web-demo-sub">{{ $t('webDemo.subtitle') }}</p>
-
-        <View class="web-demo-card">
-          <Text class="web-demo-heading">{{ $t('webDemo.cardTitle') }}</Text>
-          <Text class="web-demo-text">{{ $t('webDemo.cardDesc') }}</Text>
-
-          <View class="web-demo-row">
-            <Pressable
-              class="web-demo-btn"
-              :style="{ backgroundColor: pressed ? '#0a8c6a' : '#16c79a' }"
-              @press="handlePress"
-            >
-              <Text class="web-demo-btn-text">{{ pressed ? $t('webDemo.pressed') : $t('webDemo.pressMe') }}</Text>
-            </Pressable>
-          </View>
-
-          <TextInput
-            class="web-demo-input"
-            :placeholder="$t('webDemo.inputPlaceholder')"
-            :text="inputText"
-            @change="(e) => (inputText = e?.text ?? '')"
-          />
-          <Text class="web-demo-text" v-if="inputText">{{ $t('webDemo.youTyped') }}: {{ inputText }}</Text>
-
-          <View class="web-demo-row">
-            <ActivityIndicator :style="{ marginRight: 8 }" />
-            <Text class="web-demo-text">{{ $t('webDemo.loading') }}</Text>
-          </View>
-        </View>
-      </div>
-    </section>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { Alert, Platform, StyleSheet } from '@cat5th/vue-rn/web'
-
 const { t } = useI18n()
 const featureKeys = ['renderer', 'fabric', 'router', 'sfc', 'hmr', 'css']
-const pressed = ref(false)
-const inputText = ref('')
-
-// 验证 Platform API
-const isWeb = Platform.OS === 'web'
-
-// 验证 StyleSheet.create
-const demoStyle = StyleSheet.create({
-  card: { flex: 1, padding: 24 },
-})
-
-// 验证 Alert API（点击按钮时触发）
-function handlePress() {
-  pressed.value = !pressed.value
-  if (pressed.value) {
-    Alert.alert(
-      'Vue RN Web',
-      `Platform.OS = ${Platform.OS}${isWeb ? ' ✅' : ' ⚠️'}`,
-    )
-  }
-}
 
 const quickStart = `# 1. 安装
 npm install @cat5th/vue-rn @rasenjs/rn-dom vue vue-router
@@ -211,64 +151,5 @@ createApp(App).register(appName)
   max-width: 720px;
   margin: 0 auto;
   line-height: 1.5;
-}
-
-/* Web components demo (rendered by @cat5th/vue-rn/web) */
-.web-demo {
-  background: #0f0f1a;
-  padding: 72px 0;
-}
-.web-demo .section-title {
-  color: #e0e0ee;
-}
-.web-demo-sub {
-  text-align: center;
-  color: #888899;
-  margin-bottom: 40px;
-}
-.web-demo-card {
-  max-width: 480px;
-  margin: 0 auto;
-  background: #1a1a2e;
-  border-radius: 16px;
-  padding: 24px;
-}
-.web-demo-heading {
-  color: #16c79a;
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-.web-demo-text {
-  color: #b0b0c0;
-  font-size: 14px;
-  line-height: 20px;
-}
-.web-demo-row {
-  flex-direction: row;
-  align-items: center;
-  margin-top: 16px;
-}
-.web-demo-btn {
-  background: #16c79a;
-  border-radius: 8px;
-  padding: 10px 20px;
-  align-items: center;
-  cursor: pointer;
-}
-.web-demo-btn-text {
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 600;
-}
-.web-demo-input {
-  margin-top: 16px;
-  background: #0f0f1a;
-  border-radius: 8px;
-  padding: 10px 12px;
-  color: #e0e0ee;
-  font-size: 14px;
-  border: 1px solid #2a2a3e;
-  min-height: 40px;
 }
 </style>
