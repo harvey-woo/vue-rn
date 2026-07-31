@@ -7,3 +7,4 @@ dist/
 yarn.lock
 package-lock.json
 *.bak
+cat5th-vue-rn-0.1.0.tgz

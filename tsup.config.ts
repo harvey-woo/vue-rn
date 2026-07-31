@@ -5,6 +5,7 @@ export default defineConfig({
     index: 'src/index.ts',
     router: 'src/router.ts',
     'web/index': 'src/web/index.ts',
+    'metro/index': 'src/metro/index.ts',
   },
   format: ['cjs', 'esm'],
   target: 'es2020',
@@ -20,4 +21,5 @@ export default defineConfig({
     'react-native',
     'vue',
   ],
+  onSuccess: 'cp src/metro/nostics.cjs dist/metro/nostics.cjs',
 })

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue'
-import { useCssModule } from '@rasenjs/vue-rn'
+import { useCssModule } from '@cat5th/vue-rn'
 import TodoItem from '../../TodoItem.vue'
 
 const draft = ref('')

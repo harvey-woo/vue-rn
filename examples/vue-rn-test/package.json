@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@rasenjs/rn-dom": "^0.1.0",
-    "@rasenjs/vue-rn": "file:../..",
+    "@cat5th/vue-rn": "file:../..",
     "@react-native/new-app-screen": "0.86.0",
     "@vue/reactivity": "3.5.40",
     "@vue/runtime-core": "3.5.40",

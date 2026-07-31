@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { RouterView, useRouter } from 'vue-router'
-import { RouterLink } from '@rasenjs/vue-rn/router'
+import { RouterLink } from '@cat5th/vue-rn/router'
 
 const router = useRouter()
 const currentPath = ref('/')

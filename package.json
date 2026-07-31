@@ -10,20 +10,26 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
     },
     "./router": {
       "types": "./dist/router.d.ts",
-      "import": "./dist/router.js",
-      "require": "./dist/router.cjs"
+      "import": "./dist/router.mjs",
+      "require": "./dist/router.js"
     },
     "./web": {
       "types": "./dist/web/index.d.ts",
       "import": "./dist/web/index.mjs",
       "require": "./dist/web/index.js"
     },
-    "./dist/transformer/*": "./dist/transformer/*"
+    "./metro": {
+      "types": "./dist/metro/index.d.ts",
+      "import": "./dist/metro/index.mjs",
+      "require": "./dist/metro/index.js"
+    },
+    "./dist/transformer/*": "./dist/transformer/*",
+    "./package.json": "./package.json"
   },
   "typesVersions": {
     "*": {
@@ -32,6 +38,9 @@
       ],
       "web": [
         "./dist/web/index.d.ts"
+      ],
+      "metro": [
+        "./dist/metro/index.d.ts"
       ],
       "dist/index": [
         "./dist/index.d.ts"
@@ -62,6 +71,13 @@
     "vue-router": "^4.0.0 || ^5.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/plugin-syntax-typescript": "^7.25.0",
+    "@babel/plugin-transform-typescript": "^7.25.0",
+    "@react-native/metro-babel-transformer": "0.86.0",
+    "@types/node": "^20.10.0",
+    "@vue/compiler-core": "^3.5.0",
+    "@vue/compiler-sfc": "^3.5.0",
     "@vue/runtime-core": "^3.4.0",
     "tsup": "^8.0.0",
     "typescript": "^5.3.3"

@@ -1,5 +1,5 @@
 import { createRouter } from 'vue-router'
-import { createRNHistory } from '@rasenjs/vue-rn/router'
+import { createRNHistory } from '@cat5th/vue-rn/router'
 import Home from './src/pages/Home.vue'
 import About from './src/pages/About.vue'
 
