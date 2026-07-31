@@ -38,12 +38,32 @@
     }
   },
   "code": {
-    "title": "开始使用",
-    "tab": "快速开始",
-    "install": "安装",
-    "metro": "Metro 配置",
-    "entry": "入口文件",
-    "component": "组件"
+    "title": "快速开始",
+    "subtitle": "只需 4 步即可跑起来",
+    "steps": {
+      "install": {
+        "title": "安装依赖",
+        "desc": "安装 vue-rn 与 React Native 基础依赖"
+      },
+      "metro": {
+        "title": "配置 Metro",
+        "desc": "一行接入 withVueRN 插件"
+      },
+      "entry": {
+        "title": "创建入口",
+        "desc": "注册应用为 RN 启动入口"
+      },
+      "component": {
+        "title": "编写组件",
+        "desc": "用熟悉的 Vue 语法写界面"
+      }
+    },
+    "file": {
+      "bash": "terminal",
+      "metro": "metro.config.js",
+      "entry": "index.ts",
+      "component": "App.vue"
+    }
   },
   "docs": {
     "intro": "完整的文档托管在 GitHub 仓库中，按主题分类：",

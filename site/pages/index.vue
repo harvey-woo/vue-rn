@@ -30,7 +30,73 @@
     <section class="code-section">
       <div class="container">
         <h2 class="section-title">{{ $t('code.title') }}</h2>
-        <pre><code>{{ quickStart }}</code></pre>
+        <p class="code-subtitle">{{ $t('code.subtitle') }}</p>
+
+        <div class="steps">
+          <!-- Step 1: Install -->
+          <div class="step">
+            <div class="step-header">
+              <span class="step-number">1</span>
+              <div class="step-info">
+                <h3>{{ $t('code.steps.install.title') }}</h3>
+                <p>{{ $t('code.steps.install.desc') }}</p>
+              </div>
+            </div>
+            <CodeBlock
+              :code="installCode"
+              :file="$t('code.file.bash')"
+              language="bash"
+            />
+          </div>
+
+          <!-- Step 2: Metro -->
+          <div class="step">
+            <div class="step-header">
+              <span class="step-number">2</span>
+              <div class="step-info">
+                <h3>{{ $t('code.steps.metro.title') }}</h3>
+                <p>{{ $t('code.steps.metro.desc') }}</p>
+              </div>
+            </div>
+            <CodeBlock
+              :code="metroCode"
+              :file="$t('code.file.metro')"
+              language="javascript"
+            />
+          </div>
+
+          <!-- Step 3: Entry -->
+          <div class="step">
+            <div class="step-header">
+              <span class="step-number">3</span>
+              <div class="step-info">
+                <h3>{{ $t('code.steps.entry.title') }}</h3>
+                <p>{{ $t('code.steps.entry.desc') }}</p>
+              </div>
+            </div>
+            <CodeBlock
+              :code="entryCode"
+              :file="$t('code.file.entry')"
+              language="typescript"
+            />
+          </div>
+
+          <!-- Step 4: Component -->
+          <div class="step">
+            <div class="step-header">
+              <span class="step-number">4</span>
+              <div class="step-info">
+                <h3>{{ $t('code.steps.component.title') }}</h3>
+                <p>{{ $t('code.steps.component.desc') }}</p>
+              </div>
+            </div>
+            <CodeBlock
+              :code="componentCode"
+              :file="$t('code.file.component')"
+              language="xml"
+            />
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -40,24 +106,31 @@
 const { t } = useI18n()
 const featureKeys = ['renderer', 'fabric', 'router', 'sfc', 'hmr', 'css']
 
-const quickStart = `# 1. 安装
-npm install @cat5th/vue-rn @rasenjs/rn-dom vue vue-router
+const installCode = `npm install @cat5th/vue-rn @rasenjs/rn-dom vue vue-router`
 
-# 2. Metro 配置（metro.config.js）
-const { getDefaultConfig } = require('@react-native/metro-config')
+const metroCode = `const { getDefaultConfig } = require('@react-native/metro-config')
 const { withVueRN } = require('@cat5th/vue-rn/metro')
-module.exports = withVueRN(getDefaultConfig(__dirname))
 
-# 3. 入口（index.ts）
-import { createApp } from '@cat5th/vue-rn'
+module.exports = withVueRN(getDefaultConfig(__dirname))`
+
+const entryCode = `import { createApp } from '@cat5th/vue-rn'
 import App from './App.vue'
 import { name as appName } from './app.json'
-createApp(App).register(appName)
 
-# 4. 组件（App.vue）
-\u003CView :style="{ flex: 1, justifyContent: 'center', alignItems: 'center' }">
-  \u003CText>Hello Vue 3 + RN!\u003C/Text>
-\u003C/View>`
+createApp(App).register(appName)`
+
+const componentCode = `\u003Cscript setup lang="ts"\u003E
+import { ref } from 'vue'
+const count = ref(0)
+\u003C/script\u003E
+
+\u003Ctemplate\u003E
+  \u003CView :style="{ flex: 1, justifyContent: 'center', alignItems: 'center' }"\u003E
+    \u003CText :style="{ fontSize: 24, fontWeight: 'bold' }"\u003E
+      Hello Vue 3 + RN!
+    \u003C/Text\u003E
+  \u003C/View\u003E
+\u003C/template\u003E`
 </script>
 
 <style scoped>
@@ -147,9 +220,45 @@ createApp(App).register(appName)
 .code-section {
   padding: 0 0 72px;
 }
-.code-section pre {
+.code-subtitle {
+  text-align: center;
+  color: #888;
+  margin-top: -24px;
+  margin-bottom: 40px;
+}
+.steps {
   max-width: 720px;
   margin: 0 auto;
-  line-height: 1.5;
+}
+.step {
+  margin-bottom: 32px;
+}
+.step-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #16c79a;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.step-info h3 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.step-info p {
+  color: #888;
+  font-size: 14px;
 }
 </style>

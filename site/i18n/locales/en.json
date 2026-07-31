@@ -38,12 +38,32 @@
     }
   },
   "code": {
-    "title": "Getting Started",
-    "tab": "Quick Start",
-    "install": "Install",
-    "metro": "Metro Config",
-    "entry": "Entry File",
-    "component": "Component"
+    "title": "Quick Start",
+    "subtitle": "Running in just 4 steps",
+    "steps": {
+      "install": {
+        "title": "Install dependencies",
+        "desc": "Install vue-rn and React Native base dependencies"
+      },
+      "metro": {
+        "title": "Configure Metro",
+        "desc": "One-line withVueRN plugin setup"
+      },
+      "entry": {
+        "title": "Create entry",
+        "desc": "Register the app as an RN launch entry"
+      },
+      "component": {
+        "title": "Write components",
+        "desc": "Build UI with familiar Vue syntax"
+      }
+    },
+    "file": {
+      "bash": "terminal",
+      "metro": "metro.config.js",
+      "entry": "index.ts",
+      "component": "App.vue"
+    }
   },
   "docs": {
     "intro": "Full documentation is hosted on the GitHub repository, organized by topic:",
