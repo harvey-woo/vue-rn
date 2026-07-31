@@ -1,43 +1,14 @@
 /**
- * @rasenjs/vue-rn — RN Built-in Tag Type Declarations for Vue Templates
+ * @cat5th/vue-rn — RN 内置组件类型声明
  *
- * TYPE-ONLY — RN tags are custom elements resolved by rn-dom at runtime.
- * This file is referenced by the project's env.d.ts to enable Volar
- * IntelliSense for RN built-in elements in .vue templates.
+ * ⚠️ 自 v0.2.0 起组件类型已自动注册：
+ * 只需 `import { createApp } from '@cat5th/vue-rn'`，
+ * .vue 模板即可获得 RN 组件补全与类型检查，无需手动引入本文件。
  *
- * Usage in env.d.ts:
- *   /// <reference path="node_modules/@rasenjs/vue-rn/tags.d.ts" />
+ * 本文件保留用于兼容旧用法：
+ *   /// <reference path="node_modules/@cat5th/vue-rn/tags.d.ts" />
+ * 直接转发到主入口的类型声明。
  */
 
-import type { DefineComponent } from 'vue'
-import type {
-  RNViewProps, RNSafeAreaViewProps, RNTextProps,
-  RNImageProps, RNTextInputProps, RNAndroidTextInputProps,
-  RNScrollViewProps, RNAndroidHorizontalScrollViewProps,
-  RNActivityIndicatorProps, RNProgressBarAndroidProps,
-  RNSwitchProps, RNAndroidSwitchProps,
-  RNRefreshControlProps, RNAndroidSwipeRefreshLayoutProps,
-  RNModalProps, RNDrawerLayoutAndroidProps, RNDebuggingOverlayProps,
-} from '@rasenjs/rn-dom'
+export * from './dist/index'
 
-declare module 'vue' {
-  export interface GlobalComponents {
-    View: DefineComponent<RNViewProps>
-    SafeAreaView: DefineComponent<RNSafeAreaViewProps>
-    Text: DefineComponent<RNTextProps>
-    Image: DefineComponent<RNImageProps>
-    TextInput: DefineComponent<RNTextInputProps>
-    AndroidTextInput: DefineComponent<RNAndroidTextInputProps>
-    ScrollView: DefineComponent<RNScrollViewProps>
-    AndroidHorizontalScrollView: DefineComponent<RNAndroidHorizontalScrollViewProps>
-    ActivityIndicator: DefineComponent<RNActivityIndicatorProps>
-    ProgressBarAndroid: DefineComponent<RNProgressBarAndroidProps>
-    Switch: DefineComponent<RNSwitchProps>
-    AndroidSwitch: DefineComponent<RNAndroidSwitchProps>
-    RefreshControl: DefineComponent<RNRefreshControlProps>
-    AndroidSwipeRefreshLayout: DefineComponent<RNAndroidSwipeRefreshLayoutProps>
-    Modal: DefineComponent<RNModalProps>
-    DrawerLayoutAndroid: DefineComponent<RNDrawerLayoutAndroidProps>
-    DebuggingOverlay: DefineComponent<RNDebuggingOverlayProps>
-  }
-}

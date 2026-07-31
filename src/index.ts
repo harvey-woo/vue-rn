@@ -20,6 +20,10 @@ import { createRenderer, getCurrentInstance } from '@vue/runtime-core'
 import { RNDocument, normalizeEventName, isEvent } from '@rasenjs/rn-dom'
 import type { RNNode, RNTextNode, RNCommentNode } from '@rasenjs/rn-dom'
 
+// 引入全局组件类型声明（GlobalComponents），
+// 用户 import 本包即可在 .vue 模板获得 RN 组件补全与类型检查。
+import './global-types'
+
 let _doc: RNDocument | null = null
 
 // ---------------------------------------------------------------------------
@@ -194,7 +198,30 @@ export function getOrCreateDocument(rootTag?: number): RNDocument {
  *   <View :style="$style.myClass" />
  *   <View :style="$style.foo.myClass" />
  */
-export function useCssModule(name = '$style'): Record<string, unknown> {
+
+/** CSS module 中一个 class 对应的 RN style 对象 */
+export type CSSModuleStyle = Record<string, string | number | boolean>
+
+/** CSS module 映射：className → RN style 对象 */
+export type CSSModules = Record<string, CSSModuleStyle>
+
+/**
+ * 获取当前组件的 CSS Module style 映射（推荐）。
+ *
+ * 与 Vue 内置 `useCssModule`（返回 CSS 类名字符串）不同，
+ * vue-rn 的 CSS Module 直接编译为 RN style 对象，因此使用本函数。
+ * 采用独立命名可避免与 Vue 内置 API 的语义冲突
+ * （vue-tsc 会对名为 `useCssModule` 的调用做硬编码类型推断）。
+ *
+ * ```ts
+ * const style = useStyleModule()          // <style module>
+ * const foo = useStyleModule('foo')       // <style module="foo">
+ * ```
+ *
+ * 模板中仍可使用 `$style`：
+ *   <View :style="$style.myClass" />
+ */
+export function useStyleModule(name = '$style'): CSSModules {
   const instance = getCurrentInstance()
   if (!instance) {
     return {}
@@ -203,6 +230,18 @@ export function useCssModule(name = '$style'): Record<string, unknown> {
   if (!modules) {
     return {}
   }
-  const mod = modules[name] as Record<string, unknown> | undefined
+  const mod = modules[name] as CSSModules | undefined
   return mod ?? {}
+}
+
+/**
+ * @deprecated 请使用 `useStyleModule`。
+ *
+ * 由于 vue-tsc 对名为 `useCssModule` 的调用有硬编码类型推断
+ * （会按 Vue 内置语义推断为 `Record<string, string>`），
+ * 在 `.vue` 的 `<script setup>` 中使用本函数可能获得错误的返回类型。
+ * 模板中的 `$style` 不受影响。
+ */
+export function useCssModule(name = '$style'): CSSModules {
+  return useStyleModule(name)
 }

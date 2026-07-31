@@ -12,6 +12,7 @@ export default defineConfig({
   splitting: false,
   sourcemap: true,
   clean: true,
+  dts: true,
   external: [
     '@rasenjs/rn-dom',
     '@vue/runtime-core',
