@@ -66,3 +66,11 @@ module.exports = withVueRN({
 ## HMR 热更新
 
 开发时修改 `.vue` 文件自动热替换，组件状态保持不丢失。修改 CSS 配置文件后需重启 Metro。
+
+---
+
+## 下一步
+
+- [入门指南](./getting-started.md) — 项目初始化与 Metro 配置
+- [Native 渲染](./native.md) — CSS Modules 与样式处理
+- [API 参考](./api.md) — `withVueRN` 完整签名

@@ -98,3 +98,12 @@ npx react-native run-android
 
 > 如果 HMR 不生效，请参考 [Transformer 文档](./transformer.md)。
 
+---
+
+## 接下来
+
+- [路由集成](./router.md) — 多页面导航与 `RouterLink`
+- [Native 渲染](./native.md) — 渲染原理与 CSS Modules
+- [Metro Transformer](./transformer.md) — CSS 工具类与 HMR 配置
+- [API 参考](./api.md) — 完整 API 签名
+

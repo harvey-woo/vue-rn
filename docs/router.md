@@ -96,3 +96,11 @@ router.push('/')
 | `isActive` | `Ref<boolean>` | 是否匹配当前路由 |
 | `isExactActive` | `Ref<boolean>` | 是否精确匹配 |
 | `navigate` | `function` | 导航函数 |
+
+---
+
+## 下一步
+
+- [入门指南](./getting-started.md) — 项目初始化与 Metro 配置
+- [Metro Transformer](./transformer.md) — CSS 工具类与 HMR
+- [API 参考](./api.md) — `createRNHistory` / `RouterLink` 完整签名
