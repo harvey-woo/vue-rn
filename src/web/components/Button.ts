@@ -64,11 +64,9 @@ export const Button = defineComponent({
         accessibilityLabel: props.accessibilityLabel,
         testID: props.testID,
         tabIndex: props.disabled ? -1 : 0,
-        children: createElement('Text', {
-          style: base.text,
-          children: props.title,
-        }),
-      })
+      }, createElement('Text', {
+        style: base.text,
+      }, props.title))
     }
   },
 })

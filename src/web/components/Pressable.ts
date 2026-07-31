@@ -97,8 +97,7 @@ export const Pressable = defineComponent({
         onMouseLeave: handlePointerLeave,
         cursor: props.disabled ? 'not-allowed' : 'pointer',
         userSelect: 'none',
-        children,
-      })
+      }, children)
     }
   },
 })
