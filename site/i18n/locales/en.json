@@ -1,0 +1,64 @@
+{
+  "nav": {
+    "docs": "Docs",
+    "github": "GitHub"
+  },
+  "hero": {
+    "badge": "Vue 3 × React Native",
+    "title": "Write React Native apps with Vue 3",
+    "subtitle": "No React components, JSX, or new APIs to learn — use familiar createApp, script setup, and ref to build native iOS / Android apps",
+    "cta": "Get Started",
+    "ctaDocs": "Read the Docs"
+  },
+  "features": {
+    "title": "Features",
+    "renderer": {
+      "title": "Vue 3 Custom Renderer",
+      "desc": "createApp, script setup, ref / reactive — all of Vue's power"
+    },
+    "fabric": {
+      "title": "React Native Fabric Rendering",
+      "desc": "Directly manipulates RN native nodes via {'@'}rasenjs/rn-dom"
+    },
+    "router": {
+      "title": "Vue Router Integration",
+      "desc": "Built-in RouterLink component and createRNHistory() memory history"
+    },
+    "sfc": {
+      "title": ".vue SFC Transformation",
+      "desc": "One-line Metro config (withVueRN plugin), use .vue files directly"
+    },
+    "hmr": {
+      "title": "HMR Hot Reload",
+      "desc": "Hot-swap .vue files in dev, component state preserved"
+    },
+    "css": {
+      "title": "CSS Utility Class Support",
+      "desc": "Built-in Tailwind CSS v3/v4 and UnoCSS class-to-style resolvers"
+    }
+  },
+  "code": {
+    "title": "Getting Started",
+    "tab": "Quick Start",
+    "install": "Install",
+    "metro": "Metro Config",
+    "entry": "Entry File",
+    "component": "Component"
+  },
+  "docs": {
+    "intro": "Full documentation is hosted on the GitHub repository, organized by topic:",
+    "gettingStarted": "Getting Started",
+    "gettingStartedDesc": "Requirements, installation, and project setup",
+    "router": "Router Integration",
+    "routerDesc": "vue-router integration and the RouterLink component",
+    "transformer": "Metro Transformer",
+    "transformerDesc": "withVueRN plugin, CSS utilities, and HMR",
+    "native": "Native Rendering",
+    "nativeDesc": "Rendering internals and createApp / register",
+    "api": "API Reference",
+    "apiDesc": "Complete API signatures"
+  },
+  "footer": {
+    "madeWith": "React Native apps built with Vue 3 · MIT License"
+  }
+}

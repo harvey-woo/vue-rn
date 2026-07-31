@@ -1,0 +1,64 @@
+{
+  "nav": {
+    "docs": "文档",
+    "github": "GitHub"
+  },
+  "hero": {
+    "badge": "Vue 3 × React Native",
+    "title": "用 Vue 3 写 React Native 应用",
+    "subtitle": "无需 React 组件、JSX 或学习新的 API——用熟悉的 createApp、script setup、ref 即可构建原生 iOS / Android 应用",
+    "cta": "快速开始",
+    "ctaDocs": "阅读文档"
+  },
+  "features": {
+    "title": "特性",
+    "renderer": {
+      "title": "Vue 3 自定义渲染器",
+      "desc": "createApp、script setup、ref / reactive——Vue 的全部能力"
+    },
+    "fabric": {
+      "title": "React Native Fabric 原生渲染",
+      "desc": "通过 {'@'}rasenjs/rn-dom 直接操作 RN 原生节点，无中间层开销"
+    },
+    "router": {
+      "title": "Vue Router 集成",
+      "desc": "内置 RouterLink 组件与 RN 适用的内存路由历史 createRNHistory()"
+    },
+    "sfc": {
+      "title": ".vue SFC 转换",
+      "desc": "一行 Metro 配置（withVueRN 插件），直接使用 .vue 文件"
+    },
+    "hmr": {
+      "title": "HMR 热更新",
+      "desc": "修改 .vue 文件自动热替换，组件状态保持不丢失"
+    },
+    "css": {
+      "title": "CSS 工具类支持",
+      "desc": "内置 Tailwind CSS v3/v4、UnoCSS 的 class-to-style 解析器"
+    }
+  },
+  "code": {
+    "title": "开始使用",
+    "tab": "快速开始",
+    "install": "安装",
+    "metro": "Metro 配置",
+    "entry": "入口文件",
+    "component": "组件"
+  },
+  "docs": {
+    "intro": "完整的文档托管在 GitHub 仓库中，按主题分类：",
+    "gettingStarted": "入门指南",
+    "gettingStartedDesc": "环境要求、安装步骤与项目配置",
+    "router": "路由集成",
+    "routerDesc": "vue-router 集成与 RouterLink 组件",
+    "transformer": "Metro Transformer",
+    "transformerDesc": "withVueRN 插件、CSS 工具类与 HMR",
+    "native": "Native 渲染",
+    "nativeDesc": "渲染原理与 createApp / register",
+    "api": "API 参考",
+    "apiDesc": "完整的 API 签名"
+  },
+  "footer": {
+    "madeWith": "用 Vue 3 构建的 React Native 应用，MIT License"
+  }
+}
