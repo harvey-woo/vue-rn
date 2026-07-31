@@ -77,9 +77,9 @@ export interface RNProps {
   [key: string]: unknown
 }
 
-export function createElement(type: string, props: RNProps | null, _children?: VNode | VNode[] | string | null): VNode {
-  const tag = TAG_MAP[type] ?? type
-  if (!props) return h(tag, {}, _children)
+export function createElement(type: string | import('vue').Component, props: RNProps | null, _children?: VNode | VNode[] | string | null): VNode {
+  const tag = typeof type === 'string' ? (TAG_MAP[type] ?? type) : type
+  if (!props) return h(tag, {}, _children ?? undefined)
 
   // Handle TextInput multiline → textarea
   if (type === 'TextInput' && props.multiline === true) {
@@ -161,5 +161,5 @@ export function createElement(type: string, props: RNProps | null, _children?: V
     a.style = existing ? { ...existing, ...inlineStyle } : inlineStyle
   }
 
-  return h(tag, a, _children)
+  return h(tag, a, _children ?? undefined)
 }

@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 /**
  * @rasenjs/vue-rn/web — StyleSheet
  *

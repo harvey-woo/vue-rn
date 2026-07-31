@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { defineComponent } from 'vue'
 import { createElement } from '../create-element'
 import { StyleSheet } from '../stylesheet'

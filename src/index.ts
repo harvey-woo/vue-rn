@@ -50,7 +50,7 @@ type VNode = RNNode | RNTextNode | RNCommentNode
 function createVueRenderer(): any {
   return createRenderer({
     insert(child: VNode, parent: RNNode, anchor: VNode | null): void {
-      parent.insertBefore(child, anchor ?? undefined)
+      parent.insertBefore(child, anchor as RNNode | null)
     },
 
     remove(child: VNode): void {
