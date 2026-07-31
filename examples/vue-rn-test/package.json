@@ -4,6 +4,7 @@
   "private": true,
   "main": "index.ts",
   "scripts": {
+    "init": "node scripts/init.mjs",
     "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -13,8 +14,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "@rasenjs/rn-dom": "^0.1.0",
-    "@cat5th/vue-rn": "file:../..",
+    "@rasenjs/rn-dom": "^0.2.0",
+    "@cat5th/vue-rn": "^0.1.0",
     "@react-native/new-app-screen": "0.86.0",
     "@vue/reactivity": "3.5.40",
     "@vue/runtime-core": "3.5.40",

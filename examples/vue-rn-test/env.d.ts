@@ -1,8 +1,9 @@
-/// <reference path="node_modules/@rasenjs/vue-rn/tags.d.ts" />
-
 /**
  * Type declarations for .vue SFC files.
  * Allows TypeScript to import *.vue modules without errors.
+ *
+ * RN 内置组件类型（View / Text 等）由 @cat5th/vue-rn 主入口自动注册，
+ * 无需在此引用 tags.d.ts。
  */
 declare module '*.vue' {
   import type { DefineComponent } from 'vue'

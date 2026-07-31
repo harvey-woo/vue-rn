@@ -20,15 +20,18 @@ function onInputChange(text: string) {
   draft.value = text ?? ''
 }
 
-// ── Press 事件演示（RN Pressable 语义：pressIn → pressMove → press）──
+// ── Press 事件演示（RN Pressable 语义：pressIn → pressMove → [longPress] → pressOut → press）──
 const pressLog = ref('')
 let pressMoveCount = 0
+const isLong = ref(false)
 
-function onPressIn() { pressLog.value = 'pressed in 👇' }
+function onPressIn() { isLong.value = false; pressLog.value = 'pressed in 👇' }
 function onPressMove() { pressLog.value = `moved ×${++pressMoveCount} 👆` }
-function onPressOut() { pressLog.value = 'released ✋' }
+function onLongPress() { isLong.value = true; pressLog.value = '长按触发 ⏱ 松手时 onPress 被抑制，不会添加' }
+function onPressOut() { pressLog.value = isLong.value ? 'released ✋（长按，onPress 已抑制）' : 'released ✋' }
 
 function addTodo() {
+  // 长按后 RN 会抑制 onPress，正常情况下走不到这里
   const text = draft.value.trim()
   if (!text) return
   todos.push({ id: nextId.value++, label: text, done: false })
@@ -43,9 +46,15 @@ function remove(todo: TodoItem_t) {
   if (idx !== -1) todos.splice(idx, 1)
 }
 
+// ── Clear done 反馈 ──
+const clearLog = ref('')
+
 function clearDone() {
+  const before = todos.length
   for (let i = todos.length - 1; i >= 0; i--)
     if (todos[i].done) todos.splice(i, 1)
+  const removed = before - todos.length
+  clearLog.value = removed > 0 ? `已清除 ${removed} 项 ✅` : '没有已完成项'
 }
 </script>
 
@@ -69,18 +78,24 @@ function clearDone() {
         :editable="true"
         @changeText="onInputChange"
       />
-      <View class="justify-center" :style="{ backgroundColor: '#16c79a', borderRadius: 10, paddingHorizontal: 24, paddingVertical: 12, height: 48, marginLeft: 8 }" @pressIn="onPressIn" @pressMove="onPressMove" @pressOut="onPressOut" @press="addTodo">
+      <View class="justify-center" :style="{ backgroundColor: '#16c79a', borderRadius: 10, paddingHorizontal: 24, paddingVertical: 12, height: 48, marginLeft: 8 }" @pressIn="onPressIn" @pressMove="onPressMove" @pressOut="onPressOut" @press="addTodo" @longPress="onLongPress">
         <Text class="font-bold" :style="{ fontSize: 16, color: '#ffffff' }">Add</Text>
       </View>
     </View>
 
+    <!-- 实时显示输入内容（验证 @changeText → draft 更新） -->
+    <Text v-if="draft" :style="{ fontSize: 14, color: '#16c79a', marginBottom: 8 }">输入中: {{ draft }}</Text>
+
     <!-- Press 事件日志（onPressMove 走 rn-dom 合成） -->
     <Text v-if="pressLog" :style="{ fontSize: 13, color: '#16c79a', textAlign: 'center', marginBottom: 8 }">{{ pressLog }}</Text>
+
+    <!-- Clear done 反馈 -->
+    <Text v-if="clearLog" :style="{ fontSize: 13, color: '#e94560', textAlign: 'center', marginBottom: 8 }">{{ clearLog }}</Text>
 
     <!-- Stats -->
     <View class="flex-row justify-between items-center mb-4">
       <Text :style="{ fontSize: 14, color: '#888899' }">{{ remaining }} of {{ todos.length }} remaining</Text>
-      <View v-if="completed > 0" :style="{ backgroundColor: '#2a2a3e', borderRadius: 6, paddingHorizontal: 14, paddingVertical: 6 }" @touchEnd="clearDone">
+      <View :style="{ backgroundColor: '#2a2a3e', borderRadius: 6, paddingHorizontal: 14, paddingVertical: 6 }" @touchEnd="clearDone">
         <Text :style="{ fontSize: 13, color: '#e94560' }">Clear done</Text>
       </View>
     </View>

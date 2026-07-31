@@ -29,6 +29,13 @@ router.afterEach((to) => {
           <View v-if="currentPath === '/about'" :style="{ height: 2, backgroundColor: '#16c79a', borderRadius: 1, marginTop: 4 }" />
         </View>
       </RouterLink>
+      <!-- Components Lab -->
+      <RouterLink v-slot="{ navigate }" to="/lab" custom>
+        <View :style="{ marginLeft: 24 }" @touchEnd="navigate">
+          <Text :style="{ color: currentPath === '/lab' ? '#16c79a' : '#e0e0ee', fontSize: 18, fontWeight: 'bold' }">Lab</Text>
+          <View v-if="currentPath === '/lab'" :style="{ height: 2, backgroundColor: '#16c79a', borderRadius: 1, marginTop: 4 }" />
+        </View>
+      </RouterLink>
     </View>
 
     <!-- Go to About link — bare RouterLink (style forwarded to inner Text) -->
