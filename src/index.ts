@@ -16,7 +16,7 @@
  */
 
 import { AppRegistry } from 'react-native'
-import { createRenderer, getCurrentInstance } from '@vue/runtime-core'
+import { createRenderer, getCurrentInstance, defineComponent, h, watch } from '@vue/runtime-core'
 import { RNDocument, normalizeEventName, isEvent } from '@rasenjs/rn-dom'
 import type { RNNode, RNTextNode, RNCommentNode } from '@rasenjs/rn-dom'
 
@@ -122,6 +122,53 @@ function createVueRenderer(): any {
 }
 
 // ---------------------------------------------------------------------------
+// Modal — RN-compatible wrapper
+// ---------------------------------------------------------------------------
+
+/**
+ * Modal — wraps the native `RCTModalHostView` with React Native-compatible
+ * semantics.
+ *
+ * RN's `<Modal>` renders `null` when `visible !== true`, so the native
+ * full-screen host never lingers in the tree. Our previous behavior always
+ * mounted `RCTModalHostView` (even hidden), which left a full-screen host that
+ * swallowed touches (Press / TextInput focus / Switch all went dead). Here we
+ * align with RN: `visible === false` → render nothing.
+ *
+ * `onDismiss` is surfaced when the modal closes via the `visible` prop (RN
+ * fires it after the native dismiss animation; our simplified unmount fires
+ * it immediately).
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Modal = defineComponent({
+  name: 'Modal',
+  inheritAttrs: false,
+  props: {
+    visible: { type: Boolean, default: true },
+  },
+  setup(props, { attrs, slots }) {
+    watch(
+      () => props.visible,
+      (v) => {
+        if (!v) {
+          const onDismiss = (attrs as Record<string, unknown>).onDismiss
+          if (typeof onDismiss === 'function') {
+            ;(onDismiss as () => void)()
+          }
+        }
+      },
+    )
+    return () => {
+      if (!props.visible) return null
+      // Render the native host directly (tag resolves to RCTModalHostView via
+      // rn-dom's element registry). All non-`visible` props/events fall
+      // through via attrs.
+      return h('RCTModalHostView', { ...attrs, visible: true }, slots.default?.())
+    }
+  },
+})
+
+// ---------------------------------------------------------------------------
 // createApp
 // ---------------------------------------------------------------------------
 
@@ -135,6 +182,9 @@ export interface VueRNMountable {
 export function createApp(rootComponent: object): VueRNMountable {
   const renderer = createVueRenderer()
   const app = renderer.createApp(rootComponent)
+  // Register the Modal wrapper so `<Modal :visible="false">` does not mount a
+  // native full-screen host (aligns with RN's `visible → null` semantics).
+  app.component('Modal', Modal)
 
   return {
     mount(container: any) {

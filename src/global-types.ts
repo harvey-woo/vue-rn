@@ -52,6 +52,8 @@ export interface RNTextInputEvents {
   onSubmitEditing?: (event: RNEvent) => void
   onEndEditing?: (event: RNEvent) => void
   onKeyPress?: (event: RNEvent) => void
+  onSelectionChange?: (event: RNEvent) => void
+  onContentSizeChange?: (event: RNEvent) => void
 }
 
 /** Image 事件 */
@@ -60,9 +62,30 @@ export interface RNImageEvents {
   onError?: (event: RNEvent) => void
 }
 
-/** ScrollView 事件 */
+/** ScrollView 事件 — 对齐 RN ScrollView API */
 export interface RNScrollViewEvents {
   onScroll?: (event: RNEvent) => void
+  onScrollBeginDrag?: (event: RNEvent) => void
+  onScrollEndDrag?: (event: RNEvent) => void
+  onMomentumScrollBegin?: (event: RNEvent) => void
+  onMomentumScrollEnd?: (event: RNEvent) => void
+  onContentSizeChange?: (event: RNEvent) => void
+  onScrollToTop?: (event: RNEvent) => void
+}
+
+/** Modal 事件 — 对齐 RN Modal API */
+export interface RNModalEvents {
+  onShow?: (event: RNEvent) => void
+  onDismiss?: () => void
+  onRequestClose?: (event: RNEvent) => void
+  onOrientationChange?: (event: RNEvent) => void
+}
+
+/** Switch 事件 — 对齐 RN Switch API */
+export interface RNSwitchEvents {
+  /** 值变化，回调收到布尔（RN 表面 API） */
+  onValueChange?: (value: boolean) => void
+  onChange?: (event: RNEvent) => void
 }
 
 // ── 组件类型构造 ────────────────────────────────────────────────────
@@ -87,11 +110,11 @@ declare module 'vue' {
     AndroidHorizontalScrollView: RNComponent<'AndroidHorizontalScrollView', RNScrollViewEvents & RNTouchEvents>
     ActivityIndicator: RNComponent<'ActivityIndicator'>
     ProgressBarAndroid: RNComponent<'ProgressBarAndroid'>
-    Switch: RNComponent<'Switch', RNPressEvents>
-    AndroidSwitch: RNComponent<'AndroidSwitch', RNPressEvents>
+    Switch: RNComponent<'Switch', RNSwitchEvents>
+    AndroidSwitch: RNComponent<'AndroidSwitch', RNSwitchEvents>
     RefreshControl: RNComponent<'RefreshControl'>
     AndroidSwipeRefreshLayout: RNComponent<'AndroidSwipeRefreshLayout'>
-    Modal: RNComponent<'Modal', RNTouchEvents>
+    Modal: RNComponent<'Modal', RNModalEvents>
     DrawerLayoutAndroid: RNComponent<'DrawerLayoutAndroid'>
     Pressable: RNComponent<'Pressable', RNPressEvents>
     TouchableOpacity: RNComponent<'TouchableOpacity', RNPressEvents>

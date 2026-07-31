@@ -134,7 +134,13 @@ async function transform(params: TransformParams): Promise<{ code: string; map: 
       compilerOptions: {
         mode: 'module',
         bindingMetadata: scriptBindings,
-        isCustomElement: (tag: string) => RN_BUILT_IN_TAGS.has(tag) && !(scriptBindings && tag in scriptBindings),
+        // Modal is excluded from built-in tags so `<Modal>` compiles to
+        // resolveComponent('Modal') → hits the global Modal wrapper
+        // (visible=false renders null, aligning with RN). Without this it
+        // compiles to createElementVNode('Modal') and bypasses the wrapper,
+        // leaving a full-screen native host that swallows touches.
+        isCustomElement: (tag: string) =>
+          RN_BUILT_IN_TAGS.has(tag) && tag !== 'Modal' && !(scriptBindings && tag in scriptBindings),
         expressionPlugins: ['typescript'],
         nodeTransforms: _styleMap.size > 0 ? [classToStyleNT] : [],
       },
