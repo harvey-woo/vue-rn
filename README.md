@@ -58,8 +58,14 @@ module.exports = withVueRN(getDefaultConfig(__dirname))
 
 ```ts
 // env.d.ts
-/// <reference path="node_modules/@cat5th/vue-rn/tags.d.ts" />
+declare module '*.vue' {
+  import type { DefineComponent } from 'vue'
+  const component: DefineComponent<Record<string, unknown>, Record<string, unknown>, unknown>
+  export default component
+}
 ```
+
+> RN 组件类型自动注册，无需手动引用 `tags.d.ts`。
 
 ### 4. 创建入口
 
@@ -100,7 +106,8 @@ npx react-native run-android
 | 文档 | 说明 |
 |------|------|
 | [📖 入门指南](./docs/getting-started.md) | 环境要求、完整安装与项目配置步骤 |
-| [🧭 路由集成](./docs/router.md) | vue-router 集成与 RouterLink 组件 |
+| [� 组件](./docs/components.md) | 内置组件、事件与类型说明 |
+| [�🧭 路由集成](./docs/router.md) | vue-router 集成与 RouterLink 组件 |
 | [🔧 Metro Transformer](./docs/transformer.md) | `withVueRN` 插件、CSS 工具类与 HMR |
 | [📱 Native 渲染](./docs/native.md) | 渲染器原理与 `createApp` / `register` |
 | [🌐 Web 兼容层](./docs/web.md) | 同一套组件运行在浏览器（实验性） |

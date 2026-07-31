@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue'
-import { useCssModule } from '@cat5th/vue-rn'
+import { useStyleModule } from '@cat5th/vue-rn'
 import TodoItem from '../../TodoItem.vue'
 
 const draft = ref('')
@@ -12,8 +12,8 @@ const total = computed(() => todos.length)
 const completed = computed(() => todos.filter(t => t.done).length)
 const remaining = computed(() => total.value - completed.value)
 
-// Test useCssModule() — the $style object is a Record<string, style-object>
-const cssStyle = useCssModule()
+// Test useStyleModule() — the $style object is a Record<string, style-object>
+const cssStyle = useStyleModule()
 const cardBg = computed(() => cssStyle?.card?.backgroundColor ?? '#1a1a2e')
 
 function onInputChange(e: any) {
@@ -44,9 +44,9 @@ function clearDone() {
   <View :style="{ flex: 1, paddingHorizontal: 16 }">
     <Text :style="$style.title">Vue RN Todos ✨ (style module)</Text>
 
-    <!-- Test useCssModule() — cardBg is read from the script, not $style -->
+    <!-- Test useStyleModule() — cardBg is read from the script, not $style -->
     <View :style="{ backgroundColor: cardBg, borderRadius: 10, padding: 16, marginBottom: 16 }">
-      <Text :style="{ fontSize: 14, color: '#b0b0c0', textAlign: 'center' }">useCssModule() ✅ — card bg from script</Text>
+      <Text :style="{ fontSize: 14, color: '#b0b0c0', textAlign: 'center' }">useStyleModule() ✅ — card bg from script</Text>
     </View>
 
     <!-- Input row -->

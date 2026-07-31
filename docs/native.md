@@ -54,12 +54,12 @@ AppRegistry.registerRunnable('MyApp', ({ rootTag }) => {
 
 ## CSS Modules
 
-使用 `<style module>` 和 `useCssModule()`：
+使用 `<style module>` 和 `useStyleModule()`：
 
 ```vue
 <script setup lang="ts">
-import { useCssModule } from '@cat5th/vue-rn'
-const style = useCssModule()
+import { useStyleModule } from '@cat5th/vue-rn'
+const style = useStyleModule()
 </script>
 
 <template>

@@ -54,11 +54,18 @@ module.exports = withVueRN(getDefaultConfig(__dirname))
 
 ### 4. 添加 TypeScript 声明
 
-在 `env.d.ts` 中添加 RN 内置组件的类型声明：
+在 `env.d.ts` 中添加 `.vue` 模块声明：
 
 ```ts
-/// <reference path="node_modules/@cat5th/vue-rn/tags.d.ts" />
+declare module '*.vue' {
+  import type { DefineComponent } from 'vue'
+  const component: DefineComponent<Record<string, unknown>, Record<string, unknown>, unknown>
+  export default component
+}
 ```
+
+> RN 内置组件类型（`View` / `Text` 等）已自动注册，
+> `import { createApp } from '@cat5th/vue-rn'` 后无需手动引用 `tags.d.ts`。
 
 ### 5. 创建入口文件
 
@@ -102,6 +109,7 @@ npx react-native run-android
 
 ## 接下来
 
+- [组件](./components.md) — 内置组件与事件
 - [路由集成](./router.md) — 多页面导航与 `RouterLink`
 - [Native 渲染](./native.md) — 渲染原理与 CSS Modules
 - [Metro Transformer](./transformer.md) — CSS 工具类与 HMR 配置

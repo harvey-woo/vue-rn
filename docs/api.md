@@ -31,15 +31,25 @@ import { getOrCreateDocument } from '@cat5th/vue-rn'
 const doc = getOrCreateDocument(rootTag)
 ```
 
-### useCssModule
+### useStyleModule
 
-获取当前组件的 CSS Module style 映射。
+获取当前组件的 CSS Module style 映射（`<style module>` 编译为 RN style 对象）。
+
+> 推荐使用 `useStyleModule` 而非 Vue 内置的 `useCssModule`——
+> 后者在 vue-tsc 中会被按 Vue 内置语义（返回 CSS 类名）硬编码推断，
+> 导致返回类型错误。`useCssModule` 仍可用作兼容别名。
 
 ```ts
-import { useCssModule } from '@cat5th/vue-rn'
+import { useStyleModule } from '@cat5th/vue-rn'
 
-const style = useCssModule()        // <style module>
-const foo = useCssModule('foo')     // <style module="foo">
+const style = useStyleModule()        // <style module>
+const foo = useStyleModule('foo')     // <style module="foo">
+```
+
+模板中仍可使用 `$style`：
+
+```vue
+<View :style="$style.card" />
 ```
 
 ### RNDocument
